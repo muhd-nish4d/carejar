@@ -21,16 +21,16 @@ class ScreenDetails extends StatelessWidget {
               detail: 'Family medicine',
             ),
             const WidgetDoctorDetail(
-              detailKey: 'Education and training',
+              detailKey: 'Education and\ntraining',
               detail:
                   'Yale University School of Medicine, University of California, San Francisco',
             ),
             const WidgetDoctorDetail(
-              detailKey: 'Board certification',
+              detailKey: 'Board\ncertification',
               detail: ' American Board of Family Medicine',
             ),
             const WidgetDoctorDetail(
-              detailKey: 'Hospital affiliations',
+              detailKey: 'Hospital\naffiliations',
               detail:
                   'Stanford Hospital & Clinics, Palo Alto VA Medical Center',
             ),
@@ -39,11 +39,11 @@ class ScreenDetails extends StatelessWidget {
               detail: '15 years',
             ),
             const WidgetDoctorDetail(
-              detailKey: 'Languages spoken',
+              detailKey: 'Languages\nspoken',
               detail: 'English, Chinese',
             ),
             const WidgetDoctorDetail(
-              detailKey: 'Professional associations',
+              detailKey: 'Professional\nassociations',
               detail:
                   'American Academy of Family Physicians, California Medical Association',
             ),

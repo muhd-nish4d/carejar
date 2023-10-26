@@ -1,12 +1,14 @@
 import 'package:carejar/models/doctor_model/doctors_model.dart';
 import 'package:carejar/provider/doctors_provider.dart';
 import 'package:carejar/screens/splash/screen_splash.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   await Hive.initFlutter();
   if (!Hive.isAdapterRegistered(DoctorModelAdapter().typeId)) {
     Hive.registerAdapter(DoctorModelAdapter());

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:carejar/apis/api_endpoints.dart';
 import 'package:carejar/models/doctor_model/doctors_model.dart';
@@ -22,6 +23,7 @@ class Doctors {
       models.addAll(doctorBox.values);
       return models;
     } else {
+      log('something fisshi');
       throw Exception('Failed to get DoctorModels');
     }
   }

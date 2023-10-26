@@ -21,7 +21,7 @@ class WidgetDoctorDetail extends StatelessWidget {
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
           const SizedBox(
-            width: 10,
+            width: 15,
           ),
           Expanded(
             child: Text(

@@ -17,9 +17,11 @@ class ScreenHome extends StatelessWidget {
         body: SafeArea(
       child: Column(
         children: [
-          const Padding(
+          Padding(
             padding: EdgeInsets.all(8.0),
-            child: CupertinoSearchTextField(),
+            child: CupertinoSearchTextField(
+              onChanged: (value) {},
+            ),
           ),
           Expanded(
             child: Consumer<DoctorsProvider>(builder: (context, value, child) {
@@ -28,27 +30,60 @@ class ScreenHome extends StatelessWidget {
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
-                  : value.fetchStatus == FetchStatus.success
-                      ? GridView.builder(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2),
-                          itemBuilder: (context, index) => InkWell(
-                            onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      ScreenDetails(index: index),
-                                )),
-                            child: DoctorCard(
-                                index: index,
-                                doctorDetails: value.doctors[index]),
-                          ),
-                          itemCount: value.doctors.length,
-                        )
-                      : const Center(
-                          child: Icon(CupertinoIcons.wifi_slash),
-                        );
+                  : Stack(
+                      children: [
+                        Column(
+                          children: [
+                            Visibility(
+                                visible: value.isApiCalled,
+                                child: LinearProgressIndicator()),
+                            Expanded(
+                              child: GridView.builder(
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2),
+                                itemBuilder: (context, index) => InkWell(
+                                  onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ScreenDetails(index: index),
+                                      )),
+                                  child: DoctorCard(
+                                      index: index,
+                                      doctorDetails: value.doctors[index]),
+                                ),
+                                itemCount: value.doctors.length,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Visibility(
+                            visible: value.fetchStatus == FetchStatus.failed
+                                ? true
+                                : false,
+                            child: Container(
+                              height: 50,
+                              width: double.infinity,
+                              color: Colors.black.withOpacity(.5),
+                              child: const Row(
+                                children: [
+                                  Icon(
+                                    Icons.signal_wifi_bad_rounded,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    'Check your internet connection',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ],
+                              ),
+                            )),
+                      ],
+                    );
             }),
           ),
         ],
