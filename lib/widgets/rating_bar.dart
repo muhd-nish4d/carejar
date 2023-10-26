@@ -4,26 +4,35 @@ import 'package:flutter/material.dart';
 class RatingBar extends StatelessWidget {
   const RatingBar({
     super.key,
+    required this.rating,
   });
+  final double rating;
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Icon(
-          CupertinoIcons.star_fill,
-          size: 15,
-          color: Colors.white,
-        ),
-        SizedBox(
-          width: 5,
-        ),
-        Text(
-          '4.0',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-      ],
-    );
+    return Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8), color: Colors.green),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Icon(
+                CupertinoIcons.star_fill,
+                size: 15,
+                color: Colors.white,
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                rating.toString(),
+                style: const TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ));
   }
 }

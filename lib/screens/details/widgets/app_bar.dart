@@ -6,8 +6,11 @@ class DoctorAppBar extends StatelessWidget {
   const DoctorAppBar({
     super.key,
     required this.index,
+    required this.doctorName,
+    required this.rating,
   });
-
+  final String doctorName;
+  final String rating;
   final int index;
 
   @override
@@ -21,19 +24,12 @@ class DoctorAppBar extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 10),
-        const Text(
-          'Doctor name',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        Text(
+          doctorName,
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         const Spacer(),
-        Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8), color: Colors.green),
-          child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 4),
-            child: RatingBar(),
-          ),
-        ),
+        RatingBar(rating: double.parse(rating))
       ],
     );
   }

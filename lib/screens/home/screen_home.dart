@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:carejar/models/loading_status_enum.dart';
+import 'package:carejar/provider/details_provider.dart';
 import 'package:carejar/provider/doctors_provider.dart';
 import 'package:carejar/screens/details/screen_details.dart';
 import 'package:carejar/screens/home/widget/doctor_card.dart';
@@ -18,7 +19,7 @@ class ScreenHome extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: CupertinoSearchTextField(
               onChanged: (value) {},
             ),
@@ -36,19 +37,26 @@ class ScreenHome extends StatelessWidget {
                           children: [
                             Visibility(
                                 visible: value.isApiCalled,
-                                child: LinearProgressIndicator()),
+                                child: const LinearProgressIndicator()),
                             Expanded(
                               child: GridView.builder(
                                 gridDelegate:
                                     const SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 2),
                                 itemBuilder: (context, index) => InkWell(
-                                  onTap: () => Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            ScreenDetails(index: index),
-                                      )),
+                                  onTap: () {
+                                    Provider.of<DetailsProvider>(context,
+                                            listen: false)
+                                        .getDetailsFromFireStore(
+                                            value.doctors[index].id.toString());
+
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ScreenDetails(index: index),
+                                        ));
+                                  },
                                   child: DoctorCard(
                                       index: index,
                                       doctorDetails: value.doctors[index]),

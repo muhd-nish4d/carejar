@@ -1,4 +1,5 @@
 import 'package:carejar/models/doctor_model/doctors_model.dart';
+import 'package:carejar/provider/details_provider.dart';
 import 'package:carejar/provider/doctors_provider.dart';
 import 'package:carejar/screens/splash/screen_splash.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => DoctorsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DetailsProvider(),
         )
       ],
       child: MaterialApp(
