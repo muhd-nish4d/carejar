@@ -1,5 +1,7 @@
+import 'package:carejar/provider/doctors_provider.dart';
 import 'package:carejar/screens/home/screen_home.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ScreenSplash extends StatelessWidget {
   const ScreenSplash({super.key});
@@ -10,6 +12,8 @@ class ScreenSplash extends StatelessWidget {
       body: Center(
         child: TextButton(
             onPressed: () {
+              Provider.of<DoctorsProvider>(context, listen: false)
+                  .getDoctorModels();
               Navigator.push(
                   context,
                   MaterialPageRoute(

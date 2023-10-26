@@ -1,3 +1,4 @@
+import 'package:carejar/models/doctor_model/doctors_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -5,8 +6,10 @@ class DoctorCard extends StatelessWidget {
   const DoctorCard({
     super.key,
     required this.index,
+    required this.doctorDetails,
   });
   final int index;
+  final DoctorModel doctorDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,7 @@ class DoctorCard extends StatelessWidget {
                 ),
               ),
             ),
-            const Text('User name')
+            Text(doctorDetails.name)
           ],
         ),
       ),
