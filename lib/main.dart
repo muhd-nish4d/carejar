@@ -4,6 +4,7 @@ import 'package:carejar/provider/doctors_provider.dart';
 import 'package:carejar/screens/splash/screen_splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -25,9 +26,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        //This provider work for get the doctors list such as
+        //name, id, and username
         ChangeNotifierProvider(
           create: (context) => DoctorsProvider(),
         ),
+        //This provider work for get the doctors details from firebase
+        //such as specialy, education and training and language spoken
         ChangeNotifierProvider(
           create: (context) => DetailsProvider(),
         )
@@ -35,6 +40,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
+          textTheme: GoogleFonts.signikaNegativeTextTheme(
+            Theme.of(context).textTheme,
+          ),
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),

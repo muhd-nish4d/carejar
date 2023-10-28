@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+//Rating widget using for show the rating bar its including
+//a star icon and the rating
+
 class RatingBar extends StatelessWidget {
   const RatingBar({
     super.key,

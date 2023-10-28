@@ -2,6 +2,9 @@ import 'package:carejar/models/doctor_model/doctors_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+//This is a card for show the doctor name and his profile
+//on home screen
+
 class DoctorCard extends StatelessWidget {
   const DoctorCard({
     super.key,

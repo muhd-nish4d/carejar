@@ -4,6 +4,7 @@ import 'package:carejar/screens/details/widgets/app_bar.dart';
 import 'package:carejar/screens/details/widgets/doctor_details.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:toast/toast.dart';
 
 class ScreenDetails extends StatelessWidget {
   const ScreenDetails({super.key, required this.index});
@@ -11,6 +12,7 @@ class ScreenDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ToastContext().init(context);
     return Consumer<DetailsProvider>(builder: (context, value, child) {
       return value.status == FetchStatus.loading
           ? const Scaffold(
@@ -19,6 +21,7 @@ class ScreenDetails extends StatelessWidget {
               ),
             )
           : value.status == FetchStatus.success
+              // After getting the data from firebase
               ? Scaffold(
                   body: SafeArea(
                     child: ListView(
@@ -69,8 +72,18 @@ class ScreenDetails extends StatelessWidget {
                   ),
                   floatingActionButton: ElevatedButton(
                     onPressed: () {
-                      Provider.of<DetailsProvider>(context, listen: false)
-                          .bookUnbook(value.details.isBooked, value.details.id);
+                      //Function for book and unbook, "showToast" for show a
+                      //massege after that button click
+                      if (value.buttonStatus != FetchStatus.loading) {
+                        Provider.of<DetailsProvider>(context, listen: false)
+                            .bookUnbook(
+                                value.details.isBooked, value.details.id)
+                            .then((v) {
+                          showToast(value.details.isBooked
+                              ? "Your booking cancelled"
+                              : 'Booked');
+                        });
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green, elevation: 0),
@@ -80,7 +93,7 @@ class ScreenDetails extends StatelessWidget {
                             strokeAlign: -3,
                           )
                         : Text(
-                            value.details.isBooked ? 'Cancel Book' : 'Book',
+                            value.details.isBooked ? 'UnBook' : 'Book',
                             style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
@@ -93,5 +106,9 @@ class ScreenDetails extends StatelessWidget {
                   ),
                 );
     });
+  }
+
+  void showToast(String msg, {int? duration, int? gravity}) {
+    Toast.show(msg, duration: 2, gravity: Toast.bottom);
   }
 }

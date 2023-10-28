@@ -6,6 +6,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class DetailsProvider extends ChangeNotifier {
+  //"status" => using for update the UI as per the status fireStore data
+  //"details" => store all doctor's details for build the UI with these data
+  //"isApiCalled" => this also using for know the API call status if this true
+  //the UI will show a linear loading widget
+  //"buttonStatus" => using for update the UI as per the status of on click function
   FetchStatus? status;
   late DetailsModel details;
   FetchStatus? buttonStatus = FetchStatus.success;
@@ -15,6 +20,9 @@ class DetailsProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
+      //Taking a specific doctor data with the help of doctor's ID
+      //if the fireStor collection have a doc with the same ID
+      //that will get and store the first doc to detailsCollection
       final detailsCollection = await fireStore
           .collection('details')
           .where('id', isEqualTo: userId)
@@ -37,20 +45,24 @@ class DetailsProvider extends ChangeNotifier {
     buttonStatus = FetchStatus.loading;
     notifyListeners();
     try {
+      //Taking a specific doctor data with the help of doctor's ID
+      //if the fireStor collection have a doc with the same ID
+      //that will get and store the first doc to detailsCollection
       final detailsCollection = await fireStore
           .collection('details')
           .where('id', isEqualTo: userId)
           .get()
           .then((value) => value.docs.first);
-
+      
+      //Update the specific doctor's "isBooked" as per the status of button click
       fireStore
           .collection('details')
           .doc(detailsCollection.id)
-          .update({'isBooked': !isBooked});
-      details.isBooked = !isBooked;
-
-      buttonStatus = FetchStatus.success;
-      notifyListeners();
+          .update({'isBooked': !isBooked}).then((value) {
+        buttonStatus = FetchStatus.success;
+        details.isBooked = !isBooked;
+        notifyListeners();
+      });
     } catch (e) {
       buttonStatus = FetchStatus.failed;
       notifyListeners();
